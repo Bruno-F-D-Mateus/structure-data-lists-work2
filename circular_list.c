@@ -15,29 +15,35 @@ circular_list *init(){
 
 circular_list *insertNodeBegin(circular_list *head, char character){
     circular_list *new_node = (circular_list*)malloc(sizeof(circular_list));
-    new_node->character = character;
-    if(!head) //se não possui nenhum elemento
-        new_node->next = new_node;
-    else{ //se já possui elementos
-        new_node->next = head;
-        circular_list *aux = head;
-        while(aux->next != head) aux = aux->next;
-        aux->next = new_node;
+    if(new_node){
+        new_node->character = character;
+        if(!head) //se não possui nenhum elemento
+            new_node->next = new_node;
+        else{ //se já possui elementos
+            new_node->next = head;
+            circular_list *aux = head;
+            while(aux->next != head) aux = aux->next;
+            aux->next = new_node;
+        }
+        return new_node;
     }
-    return new_node;
+    return NULL;
 }
 
 circular_list *removeNode(circular_list *head, char character){
-    circular_list *aux = head;
+    circular_list *aux = head, *ant = head;
 
-    //2 nós
-    while(aux->next != head && aux->character != character) {
-        if(aux->next->character == character)
-            break;
+    if(!head) return head;
+
+    while(aux->character != character) {
+        ant = aux;
         aux = aux->next;
+        if(aux->next == head && aux->character != character) 
+            return head; //deu a volta completa e não encontrou. RETORNE
     } 
-    if(aux->character == character) head = aux->next;
-
+    //Encontrou
+    if(ant == aux) head = NULL;
+    ant->next = aux->next;
     free(aux);
     return head;
 }
