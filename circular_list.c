@@ -31,7 +31,7 @@ circular_list *insertNodeBegin(circular_list *head, char character){
 }
 
 circular_list *removeNode(circular_list *head, char character){
-    circular_list *aux = head, *ant = head;
+    circular_list *aux = head, *ant = NULL;
 
     if(!head) return head;
 
@@ -41,9 +41,16 @@ circular_list *removeNode(circular_list *head, char character){
         if(aux->next == head && aux->character != character) 
             return head; //deu a volta completa e não encontrou. RETORNE
     } 
-    //Encontrou
-    if(ant == aux) head = NULL;
-    ant->next = aux->next;
+    //Encontrou o Elemento Procurado
+    if(aux->next == aux) head = NULL; // se possui um unico elemento head = NULL
+    if(!ant){ //eliminar no início
+        ant = aux;
+        while(ant->next != head) ant = ant->next; //último elemento
+        head = ant->next->next; //head recebe o elemento depois do 1º
+        ant->next = head; 
+    }else
+        ant->next = aux->next;
+
     free(aux);
     return head;
 }
