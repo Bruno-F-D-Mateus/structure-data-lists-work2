@@ -159,11 +159,24 @@ void divideList(circular_list *head)
     printList(consonant_list); //imprime consoantes
 }
 
-void removeList(circular_list *head)
+circular_list *removeList(circular_list *head)
 {
-    
-    int count = 0;
-        
+    circular_list *aux = head;
+
+    while(aux->next!=head){
+        aux = aux->next;
+        circular_list *new = aux;
+        if(aux->next == head){ //se existem apenas dois nós, elimina o segundo e sai do ciclo
+            free(new);
+            break;
+        }else{ //se existirem mais de dois nós, elimina o corrente e linka a lista outra vez até terem dois sai do ciclo
+            head->next = new->next;
+            aux = head;
+            free(new);
+        }
+    }
+    free(head);
+    return NULL;
 /*
         circular_list *aux = *head;
         printf("%c\n",aux->character);
