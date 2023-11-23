@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "circular_list.h"
+#include <ctype.h>
 
 struct Circular_List{
     char character;
@@ -63,13 +64,42 @@ void printList(circular_list *head){
     }
     if(head && aux->next == head) printf("%c\n", aux->character);
 }
-/*
 
-void searchNode(circular_list *head, char character);
+void searchNode(circular_list *head, char character){
+    circular_list *aux = head;
+    
+    if(!head) printf("Lista Vazia!\n");
+    else{
+        while(aux->next != head && aux->character != character) {
+            aux = aux->next;
+        } 
+        if(aux->character == character) 
+            printf("Elemento \'%c\' Encontrado na Lista\n",aux->character);
+        else
+            printf("Elemento Inexistente!\n");
+    }
+}
 
-void divideList(circular_list *head);
+void divideList(circular_list *head){
+    circular_list *vowel_list = NULL, *consonant_list = NULL, *aux = head;
+    if(!head) printf("Lista Vazia\n");
+    else{
+        do{
+            if(tolower(aux->character) == 'a' || tolower(aux->character) == 'e' || tolower(aux->character) == 'i' || tolower(aux->character) == 'o' || tolower(aux->character) == 'u'){
+                printf("Sim\n");
+                 if(!vowel_list){ //primeiro elemento aponta para ele mesmo
+                    vowel_list = aux;
+                    aux = aux->next;
+                    vowel_list->next = vowel_list;                    
+                 }else{
+                    //vowel_list
+                 }
+                 break;
+            }
+        }while(aux != head); //aux é o primeiro elemento
+    }
+}
 
-*/
 circular_list *removeList(circular_list *head){
     free(head);
     return NULL;
