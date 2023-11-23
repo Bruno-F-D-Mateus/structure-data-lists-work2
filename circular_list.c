@@ -177,17 +177,4 @@ circular_list *removeList(circular_list *head)
     }
     free(head);
     return NULL;
-/*
-        circular_list *aux = *head;
-        printf("%c\n",aux->character);
-        free(aux);
-        if(!aux) printf("Vazio");
-        else printf("Preenchido!");
-        printf("\n%c\n",aux->character);
-        aux = aux-
-        if(head->next==head) free(head);
-        else{
-
-        }
-*/
 }
