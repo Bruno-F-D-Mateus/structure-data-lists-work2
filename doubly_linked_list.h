@@ -8,20 +8,22 @@ typedef struct Route route;
 // routes
 typedef struct Routes routes;
 
-stations *initRoutes();
-
 stations *initStations();
 
-routes *createRoute(routes *rts);
+routes *initRoutes();
 
 stations *createStation(stations *sts, char *name, int qty);
 
-int getMaxQtySation(int code, routes *rts);
+void *createRoute(routes *rts);
 
-station *getMaxStation(stations *comingSts);
+void printRoutes(routes *myRoutes);
 
-route *getRouteByCode(int code, routes *rts);
+void getMaxQtyStation(int code, routes *rts);
+
+stations *getMaxStation(stations *comingSts);
+
+routes *getRouteByCode(int code, routes *rts);
 
 int countRts(routes *rts);
 
-int verifyStation(stations *sts, station *st);
+int verifyStation(stations *sts, stations *st);

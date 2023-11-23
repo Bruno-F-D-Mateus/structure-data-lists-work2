@@ -1,7 +1,7 @@
-#include "doubly_linked_list.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
+#include "doubly_linked_list.h"
 
 struct Station
 {
@@ -11,7 +11,7 @@ struct Station
 
 struct Stations
 {
-    struct Station *st;
+    struct Station st;
     struct Stations *prev;
     struct Stations *prox;
 };
@@ -24,106 +24,116 @@ struct Route
 
 struct Routes
 {
-    struct Route rot;
+    struct Route rt;
     struct Routes *prev;
     struct Routes *prox;
 };
 
-routes *initRoutes()
-{
-    routes *rts = malloc(sizeof(routes));
-
-    if (rts == NULL)
-        printf("Erro ao criar");
-
-    return rts;
-}
-
 stations *initStations()
 {
-    stations *sts = malloc(sizeof(stations));
+    stations *newStation = (stations *)malloc(sizeof(stations));
 
-    if (sts == NULL)
+    return newStation;
+}
+
+routes *initRoutes()
+{
+    routes *newRoutes = (routes *)malloc(sizeof(routes));
+
+    return newRoutes;
+}
+
+// Código é criado de forma automática
+void *createRoute(routes *myRoutes)
+{
+
+    routes *newRoute = (routes*)malloc(sizeof(routes));
+
+    if (newRoute != NULL)
+    {
+        newRoute->rt.code = 1 + countRts(myRoutes);
+        newRoute->rt.sts = NULL;
+
+        myRoutes->prox = newRoute;
+    }
+    else
         printf("Erro ao criar");
 
-    return sts;
 }
 
-routes *createRoute(routes *rts)
+void printRoutes(routes *myRoutes)
 {
-    route *rt = malloc(sizeof(route));
+    routes *aux = myRoutes;
 
-    if (rt != NULL)
+    printf("-----");
+
+    /* while (aux)
     {
-        rt->code = 1 + countRts(rts);
-        rt->sts = NULL;
+        printf("rota: %d\n", aux->rt.code);
 
-        rts->prox = rt;
-    }
-
-    return rts;
+        aux = aux->prox;
+    } */
 }
 
-stations *createStation(stations *sts, char *name, int qty)
+stations *createStation(stations *myStations, char *name, int qty)
 {
-    station *newSt = malloc(sizeof(station));
+    stations *newStation = malloc(sizeof(stations));
 
-    if (verifyStation(sts, newSt) <= 0)
+    if (verifyStation(myStations, newStation) <= 0)
     {
         printf("Erro, verifique se a paragem já existe.");
 
-        return sts;
+        return myStations;
     }
 
-    newSt->name = name;
-    newSt->qty = qty;
+    newStation->st.name = name;
+    newStation->st.qty = qty;
 
-    sts->prox = newSt;
+    myStations->prox = newStation;
 
-    return sts;
+    return myStations;
 }
 
-int getMaxQtySation(int code, routes *rts)
+void getMaxQtyStation(int code, routes *myRoutes)
 {
-    route *rt = getRouteByCode(code, rts);
+    routes *rt = getRouteByCode(code, myRoutes);
 
     if (rt == NULL)
-    {
         printf("Esta rota não existe!");
-        return 0;
+    else
+    {
+        stations *maxStation = getMaxStation(rt->rt.sts);
+
+        printf("Rota com paragem mais cheia é: %s com %d passageiros!\n", maxStation->st.name, maxStation->st.qty);
     }
-
-    station *st = getMaxStation(rt->sts);
-
-    return 0;
 }
 
-station *getMaxStation(stations *comingSts)
+stations *getMaxStation(stations *rtStations)
 {
-    stations *sts = comingSts;
-    station *st;
+    stations *sts = rtStations;
+    stations *maxStation;
 
     int cont = 0;
 
-    while (sts)
+    while (sts != NULL)
     {
         if (sts->st.qty > cont)
-            st = sts;
+            maxStation = sts;
 
         sts = sts->prox;
     }
 
-    return st;
+    return maxStation;
 }
 
-route *getRouteByCode(int code, routes *rts)
+routes *getRouteByCode(int code, routes *myRoutes)
 {
-    routes *aux = rts;
+    routes *aux = myRoutes;
 
     if (aux == NULL)
         return NULL;
 
-    if (aux->route.code == code)
+    if (aux->rt.code == code)
         return aux;
 
     return getRouteByCode(code, aux->prox);
@@ -136,18 +146,18 @@ int countRts(routes *rts)
     return aux == NULL ? 0 : 1 + countRts(aux->prox);
 }
 
-int verifyStation(stations *sts, station *st)
+int verifyStation(stations *myStations, stations *newStation)
 {
-    stations *aux = sts;
+    stations *aux = myStations;
 
-    if (aux == NULL && st != NULL)
+    if (aux == NULL && newStation != NULL)
         return 1;
 
-    if (st == NULL)
+    if (newStation == NULL)
         return 0;
 
-    if (strcmp(strupr(aux->st.name), strupr(st->name)) == 0)
+    if (strcmp(strupr(aux->st.name), strupr(newStation->st.name)) == 0)
         return -1;
 
-    return verifyStation(aux->prox, st);
+    return verifyStation(aux->prox, newStation);
 }

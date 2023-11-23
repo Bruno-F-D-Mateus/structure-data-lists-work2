@@ -1,27 +1,23 @@
 #include <stdio.h>
+#include <stdio.h>
 #include "doubly_linked_list.h"
 #include "circular_list.h"
-/*   stations *sts = initStations();
-  routes *rts = initRoutes();
-
-  station *st = createStation(rts->route.sts, "Teste", 23); */
 
 int main()
 {
-    circular_list *list = init();
-    list = insertNodeBegin(list, 'a');
-    list = insertNodeBegin(list, 'b');
-    list = insertNodeBegin(list, 'c');
-    list = insertNodeBegin(list, 'd');
-    list = insertNodeBegin(list, 'a');
 
-    /*
+  routes *myRoutes = initRoutes();
 
-    */
-    printList(list);
-    printf("------------------\n");
-    divideList(list);
+  if (myRoutes != NULL)
+  {
+    myRoutes = createRoute(myRoutes);
 
-    removeList(list);
-    return 0;
+    printf("foi");
+  }
+  else
+    printf("not");
+
+  printf("dededed");
+
+  return 0;
 }

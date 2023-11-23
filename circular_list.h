@@ -12,5 +12,4 @@ void searchNode(circular_list *head, char character);
 
 void divideList(circular_list *head);
 
-circular_list *removeList(circular_list *head);
-
+circular_list* removeList(circular_list *head);
