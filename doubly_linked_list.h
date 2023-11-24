@@ -14,7 +14,7 @@ routes *initRoutes();
 
 stations *createStation(stations *sts, char *name, int qty);
 
-routes *createRoute(routes *rts);
+routes *createRouteBegin(routes *rts);
 
 void printRoutes(routes *myRoutes);
 
