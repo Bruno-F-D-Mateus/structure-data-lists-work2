@@ -9,6 +9,9 @@ int main()
   routes *myRoutes = initRoutes();
 
   myRoutes = createRouteBegin(myRoutes);
+  myRoutes = createRouteBegin(myRoutes);
+  myRoutes = createRouteBegin(myRoutes);
+
 
   printRoutes(myRoutes);
   

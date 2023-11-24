@@ -45,7 +45,6 @@ routes *initRoutes()
 
 // Código é criado de forma automática
 routes *createRouteBegin(routes *head){
-    printf("Entrou");
     routes *newRoute = (routes*)malloc(sizeof(routes));
 
     if (newRoute){
@@ -53,8 +52,6 @@ routes *createRouteBegin(routes *head){
         newRoute->rt.code = 1 + countRts(head);
         newRoute->rt.sts = NULL;
         newRoute->prev = NULL;
-
-        printf("%d - code\n", newRoute->rt.code);
 
         if(!head)
             newRoute->next = NULL;            
@@ -79,7 +76,7 @@ void printRoutes(routes *head)
             printf("rota: %d\n", aux->rt.code);
             aux = aux->next;
         }
-        printf("%c - why\n", aux->rt.code);
+        printf("rota: %d\n", aux->rt.code);
     }
 }
 
