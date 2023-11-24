@@ -44,18 +44,21 @@ routes *initRoutes()
 }
 
 // Código é criado de forma automática
-routes *createRouteBegin(routes *head){
-    routes *newRoute = (routes*)malloc(sizeof(routes));
+routes *createRouteBegin(routes *head)
+{
+    routes *newRoute = (routes *)malloc(sizeof(routes));
 
-    if (newRoute){
-        
+    if (newRoute)
+    {
+
         newRoute->rt.code = 1 + countRts(head);
         newRoute->rt.sts = NULL;
         newRoute->prev = NULL;
 
-        if(!head)
-            newRoute->next = NULL;            
-        else{
+        if (!head)
+            newRoute->next = NULL;
+        else
+        {
             head->prev = newRoute;
             newRoute->next = head;
         }
@@ -70,9 +73,13 @@ routes *createRouteBegin(routes *head){
 void printRoutes(routes *head)
 {
     routes *aux = head;
-    if(!head) printf("Lista Vazia!\n");
-    else{
-        while (aux->next!=NULL){
+    
+    if (!head)
+        printf("Lista Vazia!\n");
+    else
+    {
+        while (aux->next != NULL)
+        {
             printf("rota: %d\n", aux->rt.code);
             aux = aux->next;
         }
