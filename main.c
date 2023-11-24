@@ -10,14 +10,16 @@ int main()
 
   if (myRoutes != NULL)
   {
-    myRoutes = createRoute(myRoutes);
+    createRoute(myRoutes);
+    createRoute(myRoutes);
 
-    printf("foi");
+
   }
   else
     printf("not");
 
-  printf("dededed");
+    printRoutes(myRoutes);
+
 
   return 0;
 }
