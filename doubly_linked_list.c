@@ -13,7 +13,7 @@ struct Stations
 {
     struct Station st;
     struct Stations *prev;
-    struct Stations *prox;
+    struct Stations *next;
 };
 
 struct Route
@@ -26,7 +26,7 @@ struct Routes
 {
     struct Route rt;
     struct Routes *prev;
-    struct Routes *prox;
+    struct Routes *next;
 };
 
 stations *initStations()
@@ -39,40 +39,48 @@ stations *initStations()
 routes *initRoutes()
 {
     routes *newRoutes = (routes *)malloc(sizeof(routes));
-
+    newRoutes = NULL;
     return newRoutes;
 }
 
 // Código é criado de forma automática
-void *createRoute(routes *myRoutes)
-{
-
+routes *createRouteBegin(routes *head){
+    printf("Entrou");
     routes *newRoute = (routes*)malloc(sizeof(routes));
 
-    if (newRoute != NULL)
-    {
-        newRoute->rt.code = 1 + countRts(myRoutes);
+    if (newRoute){
+        
+        newRoute->rt.code = 1 + countRts(head);
         newRoute->rt.sts = NULL;
+        newRoute->prev = NULL;
 
-        myRoutes->prox = newRoute;
+        printf("%d - code\n", newRoute->rt.code);
+
+        if(!head)
+            newRoute->next = NULL;            
+        else{
+            head->prev = newRoute;
+            newRoute->next = head;
+        }
+        return newRoute;
     }
     else
-        printf("Erro ao criar");
+        printf("Erro ao criar Rota");
 
+    return NULL;
 }
 
-void printRoutes(routes *myRoutes)
+void printRoutes(routes *head)
 {
-    routes *aux = myRoutes;
-
-    printf("-----");
-
-    /* while (aux)
-    {
-        printf("rota: %d\n", aux->rt.code);
-
-        aux = aux->prox;
-    } */
+    routes *aux = head;
+    if(!head) printf("Lista Vazia!\n");
+    else{
+        while (aux->next!=NULL){
+            printf("rota: %d\n", aux->rt.code);
+            aux = aux->next;
+        }
+        printf("%c - why\n", aux->rt.code);
+    }
 }
 
 stations *createStation(stations *myStations, char *name, int qty)
@@ -89,7 +97,7 @@ stations *createStation(stations *myStations, char *name, int qty)
     newStation->st.name = name;
     newStation->st.qty = qty;
 
-    myStations->prox = newStation;
+    myStations->next = newStation;
 
     return myStations;
 }
@@ -120,7 +128,7 @@ stations *getMaxStation(stations *rtStations)
         if (sts->st.qty > cont)
             maxStation = sts;
 
-        sts = sts->prox;
+        sts = sts->next;
     }
 
     return maxStation;
@@ -136,14 +144,14 @@ routes *getRouteByCode(int code, routes *myRoutes)
     if (aux->rt.code == code)
         return aux;
 
-    return getRouteByCode(code, aux->prox);
+    return getRouteByCode(code, aux->next);
 }
 
 int countRts(routes *rts)
 {
     routes *aux = rts;
 
-    return aux == NULL ? 0 : 1 + countRts(aux->prox);
+    return aux == NULL ? 0 : 1 + countRts(aux->next);
 }
 
 int verifyStation(stations *myStations, stations *newStation)
@@ -156,8 +164,8 @@ int verifyStation(stations *myStations, stations *newStation)
     if (newStation == NULL)
         return 0;
 
-    if (strcmp(strupr(aux->st.name), strupr(newStation->st.name)) == 0)
+    if (strcmp(aux->st.name, newStation->st.name) == 0)
         return -1;
 
-    return verifyStation(aux->prox, newStation);
+    return verifyStation(aux->next, newStation);
 }

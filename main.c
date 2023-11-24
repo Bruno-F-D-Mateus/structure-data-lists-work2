@@ -8,16 +8,9 @@ int main()
 
   routes *myRoutes = initRoutes();
 
-  if (myRoutes != NULL)
-  {
-    myRoutes = createRoute(myRoutes);
+  myRoutes = createRouteBegin(myRoutes);
 
-    printf("foi");
-  }
-  else
-    printf("not");
-
-  printf("dededed");
-
+  printRoutes(myRoutes);
+  
   return 0;
 }
