@@ -32,7 +32,7 @@ struct Routes
 stations *initStations()
 {
     stations *newStation = (stations *)malloc(sizeof(stations));
-
+    newStation = NULL;
     return newStation;
 }
 
@@ -73,7 +73,7 @@ routes *createRouteBegin(routes *head)
 void printRoutes(routes *head)
 {
     routes *aux = head;
-    
+
     if (!head)
         printf("Lista Vazia!\n");
     else
