@@ -57,16 +57,16 @@ void displayChallenge1Menu(circular_list *myList)
     int menu;
     char character;
 
-    printf("Bem-Vindo ao 1º Desafio\n");
+    printf("Bem-Vindo ao desafio 1\n");
     printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
-    printf("|1 - Inserir Nó                                |\n");
-    printf("|2 - Remover Nó                                |\n");
+    printf("|1 - Inserir No                                |\n");
+    printf("|2 - Remover No                                |\n");
     printf("|3 - Imprimir Lista                            |\n");
-    printf("|4 - Pesquisar Nó                              |\n");
+    printf("|4 - Pesquisar No                              |\n");
     printf("|5 - Dividir Lista                             |\n");
     printf("|6 - Remover Lista                             |\n");
     printf("|0 - Sair                                      |\n");
-    printf("00000000000000000000000000000000000000000oo00000\n\nOpção: ");
+    printf("00000000000000000000000000000000000000000oo00000\n\nOpcao: ");
     scanf("%d", &menu);
 
     switch (menu)
@@ -120,22 +120,29 @@ void displayChallenge2Menu(routes *myRoutes)
 
     fflush(stdin);
 
-    char menu;
+    int menu;
     char *stationName = NULL;
 
     int codeRoute;
     int stationNameSize = 20;
-
-    printf("____BEM___VINDO___AO___DESAFIO___2___\n\n");
-    printf("1 - Criar Rota\n2 - Remover Rota\n3 - Add Paragem\n4 - Remover Paragem\n5 - Ver Rotas\n6 - Ver Paragens\n7 - Ver Paragem com mais Passageiros\n8 - Ver Rotas e suas Paragens\n0 - Sair\n\n");
-    printf("_____________________________________\n\n");
-    printf("Escolha a opcao: ");
-    scanf("%c", &menu);
+    
+    printf("Bem-Vindo ao desafio 1\n");
+    printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
+    printf("|1 - Criar Rota                                |\n");
+    printf("|2 - Remover Rota                              |\n");
+    printf("|3 - Adicionar Paragem                         |\n");
+    printf("|4 - Remover Paragem                           |\n");
+    printf("|5 - Ver Rotas                                 |\n");
+    printf("|6 - Ver Paragens                              |\n");
+    printf("|7 - Ver Paragens com mais Passageiros         |\n");
+    printf("|0 - Sair                                      |\n");
+    printf("00000000000000000000000000000000000000000oo00000\n\nOpcao: ");
+    scanf("%d", &menu);
 
     switch (menu)
     {
 
-    case '1':
+    case 1:
         // chama a função para criar rota
         system("cls");
 
@@ -148,7 +155,7 @@ void displayChallenge2Menu(routes *myRoutes)
 
         backOrLeaveMenu2(myRoutes);
         break;
-    case '2':
+    case 2:
         // chama a função para remover rota
         system("cls");
 
@@ -160,7 +167,7 @@ void displayChallenge2Menu(routes *myRoutes)
         backOrLeaveMenu2(myRoutes);
 
         break;
-    case '3':
+    case 3:
         // chama a função para add paragem a uma rota
         system("cls");
 
@@ -184,7 +191,7 @@ void displayChallenge2Menu(routes *myRoutes)
         backOrLeaveMenu2(myRoutes);
 
         break;
-    case '4':
+    case 4:
         // chama a função para remover paragem de uma rota
         system("cls");
 
@@ -209,18 +216,18 @@ void displayChallenge2Menu(routes *myRoutes)
         backOrLeaveMenu2(myRoutes);
 
         break;
-    case '5':
+    case 5:
         // chama a função para ver rotas
         system("cls");
         printRoutes(myRoutes);
         backOrLeaveMenu2(myRoutes);
 
         break;
-    case '6':
+    case 6:
         // chama a função para ver paragens
         system("cls");
 
-        printf("Insira o codigo da rota que pretende adicionar paragem: ");
+        printf("Insira o código da Rota: ");
         scanf("%d", &codeRoute);
 
         getRouteByCode(codeRoute, myRoutes) ? printStation(getRouteByCode(codeRoute, myRoutes)) : printf("Rota nao existe\n");
@@ -228,7 +235,7 @@ void displayChallenge2Menu(routes *myRoutes)
         backOrLeaveMenu2(myRoutes);
 
         break;
-    case '7':
+    case 7:
         // chama a função para ver paragem com mais passageiros de uma rota
         system("cls");
 
@@ -246,7 +253,7 @@ void displayChallenge2Menu(routes *myRoutes)
 
         backOrLeaveMenu2(myRoutes);
         break;
-    case '0':
+    case '9':
         system("cls");
         displayInitialMenu();
         break;
@@ -262,25 +269,24 @@ void backOrLeaveMenu2(routes *myRoutes)
 
     fflush(stdin);
 
-    char menu;
-
-    printf("_____________________________________\n\n");
-    printf("Voltar: 1\nSair: 2\n");
-    printf("_____________________________________\n\n");
-    printf("Escolha a opcao: ");
-    scanf("%c", &menu);
+    int menu;
+    printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
+    printf("|1 - Voltar                                    |\n");
+    printf("|2 - Sair                                      |\n");
+    printf("000000000000000000000000000000000000000000000000\n\nOpcao: ");
+    scanf("%d", &menu);
 
     switch (menu)
     {
-    case '1':
+    case 1:
         system("cls");
         displayChallenge2Menu(myRoutes);
         break;
-    case '2':
+    case 2:
         system("cls");
         displayInitialMenu();
         break;
-    case '3':
+    case 3:
         break;
     default:
         system("cls");
