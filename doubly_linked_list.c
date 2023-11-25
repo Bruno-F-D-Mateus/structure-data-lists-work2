@@ -105,6 +105,7 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
         printf("Rota nao existe!\n\n");
     else
     {
+
         if (auxRoute->rt.sts && !verifyStation(auxRoute->rt.sts, name))
             printf("Nao pode haver paragens repetidas\n\n");
         else
@@ -159,7 +160,6 @@ void printMaxStation(int code, routes *head)
                     qty = auxStation->st.qty; 
                 }
                 auxStation = auxStation->next;
-
             }
             if(qty < auxStation->st.qty){
                 name = auxStation->st.name;
