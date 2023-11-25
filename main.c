@@ -19,5 +19,12 @@ int main()
 
   printMaxStation(1, myRoutes);
 
+  removeStation(1,myRoutes,"shibuya");
+
+  printStation(getRouteByCode(1,myRoutes));
+
+  printMaxStation(1, myRoutes);
+
+
   return 0;
 }

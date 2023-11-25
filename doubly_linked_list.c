@@ -191,16 +191,26 @@ void removeStation(int routeCode, routes *myRoute, char *stationName)
         else
         {
             stations *auxStation = auxRoute->rt.sts;
-
-                while (auxStation->next != NULL)
-                {
-                    if (strcmp(auxStation->st.name, stationName) == 0)
+                if (strcmp(auxStation->st.name, stationName) == 0){ //encontrou no início
+                    auxRoute->rt.sts = auxRoute->rt.sts->next;
+                    free(auxStation);
+                }else{
+                    while (auxStation->next != NULL) //meio
                     {
-                        auxStation->prev->next = auxStation->next;
-                        auxStation->next->prev = auxStation->prev;
-                        free(auxStation);
+                        if (strcmp(auxStation->st.name, stationName) == 0)
+                        {
+                            auxStation->prev->next = auxStation->next;
+                            auxStation->next->prev = auxStation->prev;
+                            free(auxStation);
+                            return;
+                        }
+                        auxStation = auxStation->next;
                     }
-                    auxStation = auxStation->next;
+                    //último elemento
+                    if (strcmp(auxStation->st.name, stationName) == 0){
+                            auxStation->prev->next = NULL;
+                            free(auxStation);
+                    }else printf("Paragem não Encontrada\n\n");
                 }
         }
     }
