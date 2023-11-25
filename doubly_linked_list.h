@@ -22,6 +22,8 @@ void printStation(routes *myRoute);
 
 void printMaxStation(int code, routes *myRoute);
 
+void removeStation(int routeCode, routes *myRoute, char *stationName);
+
 routes *getRouteByCode(int code, routes *rts);
 
 int countRts(routes *rts);

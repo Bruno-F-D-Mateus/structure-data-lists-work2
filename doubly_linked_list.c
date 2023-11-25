@@ -63,7 +63,7 @@ routes *createRouteBegin(routes *head)
 
     return NULL;
 }
-//Imprime todas as paragens de uma determinada rota
+// Imprime todas as paragens de uma determinada rota
 void printStation(routes *myRoute)
 {
     stations *auxStation = myRoute->rt.sts;
@@ -72,14 +72,15 @@ void printStation(routes *myRoute)
     else
     {
         printf("Rota %d\n", myRoute->rt.code);
-        while (auxStation->next != NULL){
+        while (auxStation->next != NULL)
+        {
             printf("Paragem: %s - Qtd: %d\n", auxStation->st.name, auxStation->st.qty);
             auxStation = auxStation->next;
         }
         printf("Paragem: %s - Qtd: %d\n\n", auxStation->st.name, auxStation->st.qty);
     }
 }
-//Imprime todas as rotas existentes
+// Imprime todas as rotas existentes
 void printRoutes(routes *head)
 {
     routes *aux = head;
@@ -96,7 +97,7 @@ void printRoutes(routes *head)
         printf("rota: %d\n\n", aux->rt.code);
     }
 }
-//Cria paragens numa determinada rota
+// Cria paragens numa determinada rota
 void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 {
     routes *auxRoute = getRouteByCode(code, myRoutes);
@@ -116,7 +117,7 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
             newStation->st.name = name;
             newStation->st.qty = qty;
             newStation->next = NULL;
-            if(!newStation)
+            if (!newStation)
                 printf("Erro na alocação\n");
             else if (!auxRoute->rt.sts)
             { // primeiro elemento
@@ -129,47 +130,82 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 
                 while (auxStations->next != NULL)
                     auxStations = auxStations->next;
-                
+
                 auxStations->next = newStation;
                 newStation->prev = auxStations;
             }
         }
     }
 }
-//Mostra a Paragem mais lucrativa 
+// Mostra a Paragem mais lucrativa
 void printMaxStation(int code, routes *head)
 {
     routes *auxRoute = getRouteByCode(code, head);
-    if(!auxRoute)
+    if (!auxRoute)
         printf("Rota nao Existe!\n\n");
-    else{
+    else
+    {
         stations *auxStation = auxRoute->rt.sts;
-        stations *maxStation = (stations*)malloc(sizeof(stations));
+        stations *maxStation = (stations *)malloc(sizeof(stations));
 
-        if(!auxStation)
+        if (!auxStation)
             printf("Nao existem paragens nessa Rota!\n\n");
-        else{
-            //pegando os primeiros elementos
+        else
+        {
+            // pegando os primeiros elementos
             char *name = auxStation->st.name;
             int qty = auxStation->st.qty;
 
-            
-            while (auxStation->next !=NULL){
-                if(qty < auxStation->st.qty){
+            while (auxStation->next != NULL)
+            {
+                if (qty < auxStation->st.qty)
+                {
                     name = auxStation->st.name;
-                    qty = auxStation->st.qty; 
+                    qty = auxStation->st.qty;
                 }
                 auxStation = auxStation->next;
             }
-            if(qty < auxStation->st.qty){
+            if (qty < auxStation->st.qty)
+            {
                 name = auxStation->st.name;
-                qty = auxStation->st.qty; 
+                qty = auxStation->st.qty;
             }
-            printf("Rota %d\nParagem mais Lucrativa %s com %d passageiros\n\n", auxRoute->rt.code,name,qty);
+            printf("Rota %d\nParagem mais Lucrativa %s com %d passageiros\n\n", auxRoute->rt.code, name, qty);
         }
     }
 }
-//pesquisa uma determinada rota pelo código
+// remove uma paragem
+
+
+// Remover uma paragem
+
+void removeStation(int routeCode, routes *myRoute, char *stationName)
+{
+    routes *auxRoute = getRouteByCode(routeCode, myRoute);
+    if (!auxRoute)
+        printf("\nRota nao Existe!\n\n");
+    else
+    {
+        if (!auxRoute->rt.sts)
+            printf("Nao existe paragens nessa Rota\n\n");
+        else
+        {
+            stations *auxStation = auxRoute->rt.sts;
+
+                while (auxStation->next != NULL)
+                {
+                    if (strcmp(auxStation->st.name, stationName) == 0)
+                    {
+                        auxStation->prev->next = auxStation->next;
+                        auxStation->next->prev = auxStation->prev;
+                        free(auxStation);
+                    }
+                    auxStation = auxStation->next;
+                }
+        }
+    }
+}
+// pesquisa uma determinada rota pelo código
 routes *getRouteByCode(int code, routes *head)
 {
     routes *aux = head;
@@ -194,7 +230,8 @@ int countRts(routes *rts)
 int verifyStation(stations *head, char *name)
 {
     stations *auxStation = head;
-    while (auxStation->next != NULL){
+    while (auxStation->next != NULL)
+    {
         if (strcmp(auxStation->st.name, name) == 0)
             return 0;
         auxStation = auxStation->next;
