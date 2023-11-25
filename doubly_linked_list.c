@@ -72,9 +72,7 @@ void printStation(routes *myRoute)
     else
     {
         printf("Rota %d\n", myRoute->rt.code);
-
-        while (auxStation->next != NULL)
-        {
+        while (auxStation->next != NULL){
             printf("Paragem: %s - Qtd: %d\n", auxStation->st.name, auxStation->st.qty);
             auxStation = auxStation->next;
         }
@@ -101,7 +99,6 @@ void printRoutes(routes *head)
 
 void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 {
-
     routes *auxRoute = getRouteByCode(code, myRoutes);
 
     if (auxRoute == NULL)
@@ -118,8 +115,9 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
             newStation->st.name = name;
             newStation->st.qty = qty;
             newStation->next = NULL;
-
-            if (!auxRoute->rt.sts)
+            if(!newStation)
+                printf("Erro na alocação\n");
+            else if (!auxRoute->rt.sts)
             { // primeiro elemento
                 newStation->prev = NULL;
                 auxRoute->rt.sts = newStation;
@@ -130,9 +128,8 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 
                 while (auxStations->next != NULL)
                     auxStations = auxStations->next;
-
+                
                 auxStations->next = newStation;
-
                 newStation->prev = auxStations;
             }
         }
@@ -197,9 +194,11 @@ int countRts(routes *rts)
 int verifyStation(stations *head, char *name)
 {
     stations *auxStation = head;
-    while (head->next != NULL)
-        if (strcmp(head->st.name, name) == 0)
+    while (auxStation->next != NULL){
+        if (strcmp(auxStation->st.name, name) == 0)
             return 0;
+        auxStation = auxStation->next;
+    }
 
     return strcmp(head->st.name, name);
 }

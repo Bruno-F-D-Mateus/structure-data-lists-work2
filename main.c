@@ -9,17 +9,10 @@ int main()
   routes *myRoutes = initRoutes();
 
   myRoutes = createRouteBegin(myRoutes); //1 - 3ª
-  myRoutes = createRouteBegin(myRoutes); //2 - 2ª
-  myRoutes = createRouteBegin(myRoutes); //3 - 1ª
 
-  printRoutes(myRoutes);
   createStationEnd(1, "shibuya", 56, myRoutes);
   createStationEnd(1, "tokyo", 20, myRoutes);
-/*
-
-*/
-
-  printf("==============\n");
+  createStationEnd(1, "hong", 0, myRoutes);
 
   printStation(getRouteByCode(1, myRoutes));
 
