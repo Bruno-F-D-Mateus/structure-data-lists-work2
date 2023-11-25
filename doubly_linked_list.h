@@ -7,25 +7,25 @@ typedef struct Stations stations;
 typedef struct Route route;
 // routes
 typedef struct Routes routes;
-
-stations *initStations();
-
+//inicializa a rota - NULL
 routes *initRoutes();
-
-void createStationEnd(int code, char *name, int qty, routes *myRoutes);
-
-routes *createRouteBegin(routes *rts);
-
-void printRoutes(routes *myRoutes);
-
+//Insere uma nova paragem - inserção no fim
+void createStationEnd(int code, char *name, int qty, routes *headRoute);
+//insere uma nova rota - inserção no início
+routes *createRouteBegin(routes *headRoute);
+//apresenta todas as rotas existentes
+void printRoutes(routes *headRoute);
+//apresenta todas as paragens de uma determinada rota
 void printStation(routes *myRoute);
-
-void printMaxStation(int code, routes *myRoute);
-
-void removeStation(int routeCode, routes *myRoute, char *stationName);
-
-routes *getRouteByCode(int code, routes *rts);
-
-int countRts(routes *rts);
-
-int verifyStation(stations *sts, char *name);
+//apresenta a paragem mais lucrativa de uma determinada rota
+void printMaxStation(int code, routes *headRoute);
+//elimina uma a paragem de uma determinada rota
+void removeStation(int routeCode, routes *headRoute, char *stationName);
+//elimina uma rota e todas suas paragens
+routes *removeRoute(int routeCode, routes *headRoute);
+//retorna uma determinada rota pelo seu código
+routes *getRouteByCode(int code, routes *headRoute);
+//conta o número de rotas existentes
+int countRts(routes *headRoute);
+//verifica paragens com o mesmo nome
+int verifyStation(stations *head, char *name);
