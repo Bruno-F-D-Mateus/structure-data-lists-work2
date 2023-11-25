@@ -20,17 +20,10 @@ void printRoutes(routes *myRoutes);
 
 void printStation(routes *myRoute);
 
-void getMaxQtyStation(int code, routes *rts);
-
-stations *getMaxStation(stations *comingSts);
+void printMaxStation(int code, routes *myRoute);
 
 routes *getRouteByCode(int code, routes *rts);
 
 int countRts(routes *rts);
 
 int verifyStation(stations *sts, char *name);
-
-char* toLower(char *str);
-
-//Métodos Getter e Setter
-stations *getStationHead(routes *myRoutes);
