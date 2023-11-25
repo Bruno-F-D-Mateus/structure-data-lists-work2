@@ -10,20 +10,24 @@ int main()
   routes *myRoutes = initRoutes();
 
   myRoutes = createRouteBegin(myRoutes); // 1 - 3ª
+  myRoutes = createRouteBegin(myRoutes); // 1 - 3ª
+
 
   createStationEnd(1, "hong", 0, myRoutes);
   createStationEnd(1, "tokyo", 20, myRoutes);
   createStationEnd(1, "shibuya", 56, myRoutes);
+  createStationEnd(2, "lesoto", 56, myRoutes);
+
+  printRoutes(myRoutes);
 
   printStation(getRouteByCode(1, myRoutes));
 
-  printMaxStation(1, myRoutes);
+  printStation(getRouteByCode(2,myRoutes));
 
-  removeStation(1,myRoutes,"shibuya");
+  myRoutes = removeRoute(2,myRoutes);
 
-  printStation(getRouteByCode(1,myRoutes));
+  printRoutes(myRoutes);
 
-  printMaxStation(1, myRoutes);
 
 
   return 0;
