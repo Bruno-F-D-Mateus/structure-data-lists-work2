@@ -10,7 +10,7 @@ void printList(circular_list *head);
 //pesquisa um determinado elemento pelo seu caracter
 void searchNode(circular_list *head, char character);
 //divide a lista circular em duas - uma de vogais e outra de consoantes
-void divideList(circular_list *head);
+circular_list *divideList(circular_list *head);
 
 circular_list* removeList(circular_list *head);
 

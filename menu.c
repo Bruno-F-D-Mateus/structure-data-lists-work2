@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "doubly_linked_list.h"
+#include "circular_list.h"
 
 void displayInitialMenu();
-void displayChallenge1Menu();
+void displayChallenge1Menu(circular_list *myList);
 void displayChallenge2Menu();
 void backOrLeaveMenu2();
 
@@ -12,34 +14,28 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-void displayInitialMenu()
-{
+void displayInitialMenu(){
     fflush(stdin);
-
     char menu;
+     printf("Bem-Vindo aos Desafios Tudo ou Nada\n");
+     printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
+	 printf("|1 - Primeiro Desafio                          |\n");
+     printf("|2 - Segundo Desafio                           |\n");
+     printf("|0 - Sair                                      |\n");
+	 printf("00000000000000000000000000000000000000000oo00000\n\nOpção: ");
+     scanf("%c", &menu);
 
-    void displayChallenge1Menu();
-    void displayChallenge2Menu();
-
-    printf("_____________________________________\n\n");
-    printf("Desafio 1: 1\nDesafio 2: 2\nSair: 3\n\n");
-    printf("_____________________________________\n\n");
-    printf("Escolha o desafio: ");
-    scanf("%c", &menu);
-
-    switch (menu)
-    {
+    switch (menu){
     case '1':
         system("cls");
-
-        displayChallenge1Menu();
+        circular_list * myList = init();
+        displayChallenge1Menu(myList);
         break;
     case '2':
         system("cls");
-
         displayChallenge2Menu();
         break;
-    case '3':
+    case '0':
         break;
     default:
         system("cls");
@@ -48,29 +44,62 @@ void displayInitialMenu()
     }
 }
 
-void displayChallenge1Menu()
-{
-
+void displayChallenge1Menu(circular_list *myList){
+    
     fflush(stdin);
+    int menu;
+    char character;
 
-    char menu;
+     printf("Bem-Vindo ao 1º Desafio\n");
+     printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
+	 printf("|1 - Inserir Nó                                |\n");
+     printf("|2 - Remover Nó                                |\n");
+     printf("|3 - Imprimir Lista                            |\n");
+     printf("|4 - Pesquisar Nó                              |\n");
+     printf("|5 - Dividir Lista                             |\n");
+     printf("|6 - Remover Lista                             |\n");
+     printf("|0 - Sair                                      |\n");
+	 printf("00000000000000000000000000000000000000000oo00000\n\nOpção: ");
+     scanf("%d", &menu);
 
-    printf("_____________________________________\n\n");
-    printf("Desafio 1: 1\nDesafio 2: 2\nSair 3: 3\n\n");
-    printf("_____________________________________\n\n");
-    printf("Escolha o desafio: ");
-    scanf("%c", &menu);
+    switch (menu){
+    case 1:
+        printf("Insira o Caracter: ");
+        scanf("%c",&character); //eliminar um
+        scanf("%c",&character);
 
-    switch (menu)
-    {
-    case '1':
-        // chama o menu do primeiro desafio
+        myList = insertNodeBegin(myList,character);
+        (!myList) ? printf("Falha ao Inserir Nó\n") : printf("Nó Inserido com Sucesso!\n");
+        displayChallenge1Menu(myList);
         break;
-    case '2':
-        // chama o menu do segundo desafio
+    case 2:
+        printf("Remover Nó com Caracter: ");
+        scanf("%c",&character); //eliminar um
+        scanf("%c",&character);
+        myList = removeNode(myList, character);
+        (!myList) ? printf("Falha ao Remover Nó\n") : printf("Nó Removido com Sucesso!\n");
+        displayChallenge1Menu(myList);
         break;
-    case '3':
+    case 3:
+            printf("Impressão: \n-----------------\n");
+            printList(myList);
+            displayChallenge1Menu(myList);
         break;
+    case 4:
+        printf("Caracter a Pesquisar: ");
+        scanf("%c",&character); //eliminar um
+        scanf("%c",&character);
+        searchNode(myList, character);
+        displayChallenge1Menu(myList);
+    break;
+    case 5:
+        myList = divideList(myList);
+        displayChallenge1Menu(myList);
+    break;
+    case 6:
+        myList = removeList(myList);
+        displayChallenge1Menu(myList);
+    break;
     default:
         system("cls");
         displayInitialMenu();
