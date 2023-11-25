@@ -63,7 +63,7 @@ routes *createRouteBegin(routes *head)
 
     return NULL;
 }
-
+//Imprime todas as paragens de uma determinada rota
 void printStation(routes *myRoute)
 {
     stations *auxStation = myRoute->rt.sts;
@@ -79,7 +79,7 @@ void printStation(routes *myRoute)
         printf("Paragem: %s - Qtd: %d\n\n", auxStation->st.name, auxStation->st.qty);
     }
 }
-
+//Imprime todas as rotas existentes
 void printRoutes(routes *head)
 {
     routes *aux = head;
@@ -96,7 +96,7 @@ void printRoutes(routes *head)
         printf("rota: %d\n\n", aux->rt.code);
     }
 }
-
+//Cria paragens numa determinada rota
 void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 {
     routes *auxRoute = getRouteByCode(code, myRoutes);
@@ -136,7 +136,7 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
         }
     }
 }
-
+//Mostra a Paragem mais lucrativa 
 void printMaxStation(int code, routes *head)
 {
     routes *auxRoute = getRouteByCode(code, head);
@@ -169,7 +169,7 @@ void printMaxStation(int code, routes *head)
         }
     }
 }
-
+//pesquisa uma determinada rota pelo código
 routes *getRouteByCode(int code, routes *head)
 {
     routes *aux = head;
