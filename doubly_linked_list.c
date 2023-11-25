@@ -67,11 +67,14 @@ routes *createRouteBegin(routes *headRoute)
 void printStation(routes *myRoute)
 {
     stations *auxStation = myRoute->rt.sts;
-    if (!auxStation)
+
+    if (!myRoute || !auxStation)
         printf("Lista Vazia!\n\n");
     else
     {
+
         printf("Rota %d\n", myRoute->rt.code);
+        
         while (auxStation->next != NULL)
         {
             printf("Paragem: %s - Qtd: %d\n", auxStation->st.name, auxStation->st.qty);
@@ -123,6 +126,8 @@ void createStationEnd(int code, char *name, int qty, routes *headRoute)
             { // primeiro elemento
                 newStation->prev = NULL;
                 auxRoute->rt.sts = newStation;
+
+                printf("Paragem adicionada com sucesso!\n");
             }
             else
             { // outros elementos
@@ -133,6 +138,8 @@ void createStationEnd(int code, char *name, int qty, routes *headRoute)
 
                 auxStations->next = newStation;
                 newStation->prev = auxStations;
+
+                printf("Paragem adicionada com sucesso!\n");
             }
         }
     }
@@ -187,44 +194,64 @@ void removeStation(int routeCode, routes *headRoute, char *stationName)
         else
         {
             stations *auxStation = auxRoute->rt.sts;
-                if (strcmp(auxStation->st.name, stationName) == 0){ //encontrou no início
-                    auxRoute->rt.sts = auxRoute->rt.sts->next;
-                    free(auxStation);
-                }else{
-                    while (auxStation->next != NULL) //meio
+            if (strcmp(auxStation->st.name, stationName) == 0)
+            { // encontrou no início
+                auxRoute->rt.sts = auxRoute->rt.sts->next;
+                free(auxStation);
+            }
+            else
+            {
+                while (auxStation->next != NULL) // meio
+                {
+                    if (strcmp(auxStation->st.name, stationName) == 0)
                     {
-                        if (strcmp(auxStation->st.name, stationName) == 0)
-                        {
-                            auxStation->prev->next = auxStation->next;
-                            auxStation->next->prev = auxStation->prev;
-                            free(auxStation);
-                            return;
-                        }
-                        auxStation = auxStation->next;
+                        auxStation->prev->next = auxStation->next;
+                        auxStation->next->prev = auxStation->prev;
+                        free(auxStation);
+                        return;
                     }
-                    //último elemento
-                    if (strcmp(auxStation->st.name, stationName) == 0){
-                            auxStation->prev->next = NULL;
-                            free(auxStation);
-                    }else printf("Paragem não Encontrada\n\n");
+                    auxStation = auxStation->next;
                 }
+                // último elemento
+                if (strcmp(auxStation->st.name, stationName) == 0)
+                {
+                    auxStation->prev->next = NULL;
+                    free(auxStation);
+                }
+                else
+                    printf("Paragem não Encontrada\n\n");
+            }
         }
     }
 }
-//elimina uma rota e todas suas paragens
-routes *removeRoute(int routeCode, routes *headRoute){
+// elimina uma rota e todas suas paragens
+routes *removeRoute(int routeCode, routes *headRoute)
+{
     routes *auxRoute = getRouteByCode(routeCode, headRoute);
-    if(!auxRoute) printf("Rota nao Existe\n\n");
-    else{
-        if (!auxRoute->prev) //encontrou no início
+
+    if (!auxRoute)
+        printf("\nRota nao Existe\n\n");
+    else if (!auxRoute->next && !auxRoute->prev)
+    {
+        free(auxRoute);
+
+        printf("\nRota eliminado com sucesso\n\n");
+
+        return NULL;
+    }
+    else
+    {
+        if (!auxRoute->prev) // encontrou no início
             headRoute = auxRoute->next;
-        else if(!auxRoute->next) //encontrou no fim
+        else if (!auxRoute->next) // encontrou no fim
             auxRoute->prev->next = auxRoute->next;
-        else{ //no meio
+        else
+        { // no meio
             auxRoute->prev->next = auxRoute->next;
             auxRoute->next->prev = auxRoute->prev;
         }
         free(auxRoute);
+        printf("\nRota eliminado com sucesso\n\n");
     }
     return headRoute;
 }
