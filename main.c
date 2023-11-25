@@ -20,7 +20,7 @@ int main()
 
   printf("==============\n");
 
-  printStation(getRouteByCode(3, myRoutes));
+  printStation(getRouteByCode(1, myRoutes));
   //printMaxStation(1,getRouteByCode(1, myRoutes));
 
   return 0;

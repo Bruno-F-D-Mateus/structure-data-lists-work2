@@ -108,6 +108,7 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
         printf("Rota nao existe!\n");
     else
     {
+
         if (auxRoute->rt.sts && !verifyStation(auxRoute->rt.sts, name))
             printf("Nao pode haver paragens repetidas\n");
         else
@@ -128,12 +129,16 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
             { // outros elementos
                 stations *auxStations = auxRoute->rt.sts;
 
+                printf("%s\n", auxStations->st.name);
+
                 while (auxStations->next != NULL)
+                {
+                    printf("%s\n", auxStations->st.name);
                     auxStations = auxStations->next;
+                }
+                newStation->prev = auxStations;
 
                 auxStations->next = newStation;
-
-                newStation->prev = auxStations;
             }
         }
     }
@@ -142,33 +147,36 @@ void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 void printMaxStation(int code, routes *myRoutes)
 {
     routes *auxRoute = getRouteByCode(code, myRoutes);
-    if(!auxRoute)
+    if (!auxRoute)
         printf("Rota nao Existe!\n");
-    else{
+    else
+    {
         stations *auxStation = auxRoute->rt.sts;
         station *maxStation = NULL;
 
-
-        if(!auxStation)
+        if (!auxStation)
             printf("Nao existem paragens nessa Rota!\n");
-        else{
-            //pegando os primeiros elementos
-            maxStation->name = auxStation->st.name; 
+        else
+        {
+            // pegando os primeiros elementos
+            maxStation->name = auxStation->st.name;
             maxStation->qty = auxStation->st.qty;
 
-            while (auxStation->next !=NULL){
-                if(maxStation->qty < auxStation->st.qty){
+            while (auxStation->next != NULL)
+            {
+                if (maxStation->qty < auxStation->st.qty)
+                {
                     maxStation->name = auxStation->st.name;
-                    maxStation->qty = auxStation->st.qty; 
+                    maxStation->qty = auxStation->st.qty;
                 }
                 auxStation = auxStation->next;
-
             }
-            if(maxStation->qty < auxStation->st.qty){
+            if (maxStation->qty < auxStation->st.qty)
+            {
                 maxStation->name = auxStation->st.name;
-                maxStation->qty = auxStation->st.qty; 
+                maxStation->qty = auxStation->st.qty;
             }
-            printf("Rota %d\nParagem mais Lucrativa %s com %d passageiros\n", auxRoute->rt.code,maxStation->name,maxStation->qty);
+            printf("Rota %d\nParagem mais Lucrativa %s com %d passageiros\n", auxRoute->rt.code, maxStation->name, maxStation->qty);
         }
     }
 }
