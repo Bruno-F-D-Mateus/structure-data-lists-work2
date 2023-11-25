@@ -52,9 +52,10 @@ circular_list *removeNode(circular_list *head, char character)
             return head; // deu a volta completa e não encontrou. RETORNE
     }
     // Encontrou o Elemento Procurado
-    if (aux->next == aux)
+    if (aux->next == aux && aux == head){
         head = NULL; // se possui um unico elemento head = NULL
-    if (!ant)
+    }
+    else if (!ant)
     { // eliminar no início
         ant = aux;
         while (ant->next != head)
@@ -102,7 +103,7 @@ void searchNode(circular_list *head, char character)
     }
 }
 //divide a lista circular em duas - uma de vogais e outra de consoantes
-void divideList(circular_list *head)
+circular_list *divideList(circular_list *head)
 {
     circular_list *vowel_list = NULL, *consonant_list = NULL, *aux = head;
     if (!head)
@@ -159,6 +160,11 @@ void divideList(circular_list *head)
 
     printf("Lista de Consoantes: \n");
     printList(consonant_list); //imprime consoantes
+
+    //A lista se destruiu então recoomeça
+    free(vowel_list);
+    free(consonant_list);
+    return NULL;
 }
 //remove todos os elementos da lista circular
 circular_list *removeList(circular_list *head)
