@@ -62,12 +62,31 @@ routes *createRouteBegin(routes *head)
             head->prev = newRoute;
             newRoute->next = head;
         }
+
         return newRoute;
     }
     else
         printf("Erro ao criar Rota");
 
     return NULL;
+}
+
+void printStation(routes *myRoute)
+{
+    stations *auxStation = myRoute->rt.sts;
+    if (!auxStation)
+        printf("Lista Vazia!\n");
+    else
+    {
+        printf("Rota %d\n", myRoute->rt.code);
+
+        while (auxStation->next != NULL)
+        {
+            printf("Paragem: %s - Qtd: %d\n", auxStation->st.name, auxStation->st.qty);
+            auxStation = auxStation->next;
+        }
+        printf("Paragem: %s - Qtd: %d\n", auxStation->st.name, auxStation->st.qty);
+    }
 }
 
 void printRoutes(routes *head)
@@ -87,23 +106,42 @@ void printRoutes(routes *head)
     }
 }
 
-stations *createStation(stations *myStations, char *name, int qty)
+void createStationEnd(int code, char *name, int qty, routes *myRoutes)
 {
-    stations *newStation = malloc(sizeof(stations));
 
-    if (verifyStation(myStations, newStation) <= 0)
-    {
-        printf("Erro, verifique se a paragem já existe.");
+    routes *auxRoute = getRouteByCode(code, myRoutes);
 
-        return myStations;
+    if (auxRoute == NULL)
+        printf("Rota nao existe!\n");
+    else{
+        if (auxRoute->rt.sts && !verifyStation(auxRoute->rt.sts, name))
+            printf("Nao pode haver paragens repetidas\n");
+        else{
+
+            stations *newStation = (stations *)malloc(sizeof(stations));
+
+            newStation->st.name = name;
+            newStation->st.qty = qty;
+            newStation->next = NULL;
+
+            if (!auxRoute->rt.sts)
+            { // primeiro elemento
+                newStation->prev = NULL;
+                auxRoute->rt.sts = newStation;
+            }
+            else
+            { // outros elementos
+                stations *auxStations = auxRoute->rt.sts;
+
+                while (auxStations->next != NULL)
+                    auxStations = auxStations->next;
+
+                auxStations->next = newStation;
+
+                newStation->prev = auxStations;
+            }
+        }
     }
-
-    newStation->st.name = name;
-    newStation->st.qty = qty;
-
-    myStations->next = newStation;
-
-    return myStations;
 }
 
 void getMaxQtyStation(int code, routes *myRoutes)
@@ -111,12 +149,12 @@ void getMaxQtyStation(int code, routes *myRoutes)
     routes *rt = getRouteByCode(code, myRoutes);
 
     if (rt == NULL)
-        printf("Esta rota não existe!");
+        printf("Esta rota nao existe!");
     else
     {
         stations *maxStation = getMaxStation(rt->rt.sts);
 
-        printf("Rota com paragem mais cheia é: %s com %d passageiros!\n", maxStation->st.name, maxStation->st.qty);
+        printf("Rota com paragem mais cheia: %s com %d passageiros!\n", maxStation->st.name, maxStation->st.qty);
     }
 }
 
@@ -159,18 +197,18 @@ int countRts(routes *rts)
     return aux == NULL ? 0 : 1 + countRts(aux->next);
 }
 
-int verifyStation(stations *myStations, stations *newStation)
+int verifyStation(stations *head, char *name)
 {
-    stations *aux = myStations;
+    stations *auxStation = head;
+    while (head->next != NULL)
+        if (strcmp(head->st.name, name) == 0)
+            return 0;
+    
+    return strcmp(head->st.name, name);
+}
 
-    if (aux == NULL && newStation != NULL)
-        return 1;
-
-    if (newStation == NULL)
-        return 0;
-
-    if (strcmp(aux->st.name, newStation->st.name) == 0)
-        return -1;
-
-    return verifyStation(aux->next, newStation);
+// Métodos getter e setter
+stations *getStationHead(routes *myRoutes)
+{
+    return myRoutes->rt.sts;
 }

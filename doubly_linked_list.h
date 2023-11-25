@@ -12,11 +12,13 @@ stations *initStations();
 
 routes *initRoutes();
 
-stations *createStation(stations *sts, char *name, int qty);
+void createStationEnd(int code, char *name, int qty, routes *myRoutes);
 
 routes *createRouteBegin(routes *rts);
 
 void printRoutes(routes *myRoutes);
+
+void printStation(routes *myRoute);
 
 void getMaxQtyStation(int code, routes *rts);
 
@@ -26,4 +28,9 @@ routes *getRouteByCode(int code, routes *rts);
 
 int countRts(routes *rts);
 
-int verifyStation(stations *sts, stations *st);
+int verifyStation(stations *sts, char *name);
+
+char* toLower(char *str);
+
+//Métodos Getter e Setter
+stations *getStationHead(routes *myRoutes);
