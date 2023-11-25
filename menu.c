@@ -7,7 +7,7 @@ void displayInitialMenu();
 void displayChallenge2Menu(routes *myRoutes);
 void backOrLeaveMenu2(routes *myRoutes);
 void displayChallenge1Menu(circular_list *myList);
-void backOrLeaveMenu2();
+void backOrLeaveMenu2(routes *myRoutes);
 
 int main(int argc, char const *argv[])
 {
@@ -17,21 +17,23 @@ int main(int argc, char const *argv[])
     return 0;
 }
 
-void displayInitialMenu(){
+void displayInitialMenu()
+{
     fflush(stdin);
     char menu;
-     printf("Bem-Vindo aos Desafios Tudo ou Nada\n");
-     printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
-	 printf("|1 - Primeiro Desafio                          |\n");
-     printf("|2 - Segundo Desafio                           |\n");
-     printf("|0 - Sair                                      |\n");
-	 printf("00000000000000000000000000000000000000000oo00000\n\nOpcao: ");
-     scanf("%c", &menu);
+    printf("Bem-Vindo aos Desafios Tudo ou Nada\n");
+    printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
+    printf("|1 - Primeiro Desafio                          |\n");
+    printf("|2 - Segundo Desafio                           |\n");
+    printf("|0 - Sair                                      |\n");
+    printf("00000000000000000000000000000000000000000oo00000\n\nOpcao: ");
+    scanf("%c", &menu);
 
-    switch (menu){
+    switch (menu)
+    {
     case '1':
         system("cls");
-        circular_list * myList = init();
+        circular_list *myList = init();
         displayChallenge1Menu(myList);
         break;
     case '2':
@@ -48,62 +50,64 @@ void displayInitialMenu(){
     }
 }
 
-void displayChallenge1Menu(circular_list *myList){
-    
+void displayChallenge1Menu(circular_list *myList)
+{
+
     fflush(stdin);
     int menu;
     char character;
 
-     printf("Bem-Vindo ao 1º Desafio\n");
-     printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
-	 printf("|1 - Inserir Nó                                |\n");
-     printf("|2 - Remover Nó                                |\n");
-     printf("|3 - Imprimir Lista                            |\n");
-     printf("|4 - Pesquisar Nó                              |\n");
-     printf("|5 - Dividir Lista                             |\n");
-     printf("|6 - Remover Lista                             |\n");
-     printf("|0 - Sair                                      |\n");
-	 printf("00000000000000000000000000000000000000000oo00000\n\nOpção: ");
-     scanf("%d", &menu);
+    printf("Bem-Vindo ao 1º Desafio\n");
+    printf("oooooooooooooooooooooooooooooooooooooooooooooooo\n");
+    printf("|1 - Inserir Nó                                |\n");
+    printf("|2 - Remover Nó                                |\n");
+    printf("|3 - Imprimir Lista                            |\n");
+    printf("|4 - Pesquisar Nó                              |\n");
+    printf("|5 - Dividir Lista                             |\n");
+    printf("|6 - Remover Lista                             |\n");
+    printf("|0 - Sair                                      |\n");
+    printf("00000000000000000000000000000000000000000oo00000\n\nOpção: ");
+    scanf("%d", &menu);
 
-    switch (menu){
+    switch (menu)
+    {
     case 1:
         printf("Insira o Caracter: ");
-        scanf("%c",&character); //eliminar um
-        scanf("%c",&character);
+        scanf("%c", &character); // eliminar um
+        scanf("%c", &character);
 
-        myList = insertNodeBegin(myList,character);
+        myList = insertNodeBegin(myList, character);
         (!myList) ? printf("Falha ao Inserir Nó\n") : printf("Nó Inserido com Sucesso!\n");
         displayChallenge1Menu(myList);
         break;
     case 2:
         printf("Remover Nó com Caracter: ");
-        scanf("%c",&character); //eliminar um
-        scanf("%c",&character);
+        scanf("%c", &character); // eliminar um
+        scanf("%c", &character);
         myList = removeNode(myList, character);
         (!myList) ? printf("Falha ao Remover Nó\n") : printf("Nó Removido com Sucesso!\n");
         displayChallenge1Menu(myList);
         break;
     case 3:
-            printf("Impressão: \n-----------------\n");
-            printList(myList);
-            displayChallenge1Menu(myList);
+        printf("Impressão: \n-----------------\n");
+        printList(myList);
+        displayChallenge1Menu(myList);
         break;
     case 4:
         printf("Caracter a Pesquisar: ");
-        scanf("%c",&character); //eliminar um
-        scanf("%c",&character);
+        scanf("%c", &character); // eliminar um
+        scanf("%c", &character);
         searchNode(myList, character);
         displayChallenge1Menu(myList);
-    break;
+        break;
     case 5:
         myList = divideList(myList);
         displayChallenge1Menu(myList);
-    break;
+        break;
     case 6:
         myList = removeList(myList);
         displayChallenge1Menu(myList);
-    break;
+        break;
     default:
         system("cls");
         displayInitialMenu();
@@ -117,16 +121,19 @@ void displayChallenge2Menu(routes *myRoutes)
     fflush(stdin);
 
     char menu;
+    char *stationName = NULL;
+
+    int codeRoute;
+    int stationNameSize = 20;
 
     printf("____BEM___VINDO___AO___DESAFIO___2___\n\n");
-    printf("Criar Rota: 1\nRemover Rota: 2\nAdd Paragem: 3\nRemover Paragem: 4\nVer Rotas: 5\nVer Paragens: 6\nVer Paragem com mais Passageiros: 7\nVer Rotas e suas Paragens: 8\nSair: 9\n\n");
+    printf("1 - Criar Rota\n2 - Remover Rota\n3 - Add Paragem\n4 - Remover Paragem\n5 - Ver Rotas\n6 - Ver Paragens\n7 - Ver Paragem com mais Passageiros\n8 - Ver Rotas e suas Paragens\n0 - Sair\n\n");
     printf("_____________________________________\n\n");
     printf("Escolha a opcao: ");
     scanf("%c", &menu);
 
     switch (menu)
     {
-        int codeRoute;
 
     case '1':
         // chama a função para criar rota
@@ -159,7 +166,7 @@ void displayChallenge2Menu(routes *myRoutes)
 
         int qty = 0;
 
-        char *stationName = (char*)malloc(sizeof(char)*20);
+        stationName = (char *)malloc(sizeof(char) * stationNameSize);
 
         printf("Insira o codigo da rota que pretende adicionar paragem: ");
         scanf("%d", &codeRoute);
@@ -174,13 +181,30 @@ void displayChallenge2Menu(routes *myRoutes)
 
         createStationEnd(codeRoute, stationName, qty, myRoutes);
 
-
         backOrLeaveMenu2(myRoutes);
 
         break;
     case '4':
         // chama a função para remover paragem de uma rota
         system("cls");
+
+        printf("Insira o codigo da rota que pretende remover paragem: ");
+        scanf("%d", &codeRoute);
+
+        if (getRouteByCode(codeRoute, myRoutes))
+        {
+
+            stationName = (char *)malloc(sizeof(char) * stationNameSize);
+
+            fflush(stdin);
+
+            printf("Insira o nome da paragem: ");
+            scanf("%s", stationName);
+
+            removeStation(codeRoute, myRoutes, stationName);
+        }
+        else
+            printf("Rota nao existe\n\n");
 
         backOrLeaveMenu2(myRoutes);
 
@@ -208,6 +232,11 @@ void displayChallenge2Menu(routes *myRoutes)
         // chama a função para ver paragem com mais passageiros de uma rota
         system("cls");
 
+        printf("Insira o codigo da rota que pretende ver a paragem com mais passageiros: ");
+        scanf("%d", &codeRoute);
+
+        printMaxStation(codeRoute, myRoutes);
+
         backOrLeaveMenu2(myRoutes);
 
         break;
@@ -217,7 +246,7 @@ void displayChallenge2Menu(routes *myRoutes)
 
         backOrLeaveMenu2(myRoutes);
         break;
-    case '9':
+    case '0':
         system("cls");
         displayInitialMenu();
         break;

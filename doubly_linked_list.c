@@ -74,7 +74,7 @@ void printStation(routes *myRoute)
     {
 
         printf("Rota %d\n", myRoute->rt.code);
-        
+
         while (auxStation->next != NULL)
         {
             printf("Paragem: %s - Qtd: %d\n", auxStation->st.name, auxStation->st.qty);
@@ -198,6 +198,7 @@ void removeStation(int routeCode, routes *headRoute, char *stationName)
             { // encontrou no início
                 auxRoute->rt.sts = auxRoute->rt.sts->next;
                 free(auxStation);
+                printf("Paragem eliminada com sucesso!\n\n");
             }
             else
             {
@@ -208,6 +209,8 @@ void removeStation(int routeCode, routes *headRoute, char *stationName)
                         auxStation->prev->next = auxStation->next;
                         auxStation->next->prev = auxStation->prev;
                         free(auxStation);
+                        printf("Paragem eliminada com sucesso!\n\n");
+
                         return;
                     }
                     auxStation = auxStation->next;
@@ -217,6 +220,7 @@ void removeStation(int routeCode, routes *headRoute, char *stationName)
                 {
                     auxStation->prev->next = NULL;
                     free(auxStation);
+                    printf("Paragem eliminada com sucesso!\n\n");
                 }
                 else
                     printf("Paragem não Encontrada\n\n");
@@ -289,3 +293,4 @@ int verifyStation(stations *head, char *name)
 
     return strcmp(head->st.name, name);
 }
+
