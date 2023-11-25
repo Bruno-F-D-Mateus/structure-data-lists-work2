@@ -8,14 +8,14 @@ struct Circular_List
     char character;
     struct Circular_List *next;
 };
-
+//Inicializa a lista circular
 circular_list *init()
 {
     circular_list *new_list = (circular_list *)malloc(sizeof(circular_list));
     new_list = NULL;
     return new_list;
 }
-
+//Insere um novo nó, no Início
 circular_list *insertNodeBegin(circular_list *head, char character)
 {
     circular_list *new_node = (circular_list *)malloc(sizeof(circular_list));
@@ -36,7 +36,7 @@ circular_list *insertNodeBegin(circular_list *head, char character)
     }
     return NULL;
 }
-
+//Remove um Nó pelo seu caracter
 circular_list *removeNode(circular_list *head, char character)
 {
     circular_list *aux = head, *ant = NULL;
@@ -69,6 +69,7 @@ circular_list *removeNode(circular_list *head, char character)
     return head;
 }
 
+//apresenta todos os elementos da Lista Circular
 void printList(circular_list *head)
 {
     circular_list *aux = head;
@@ -80,6 +81,7 @@ void printList(circular_list *head)
     if (head && aux->next == head)
         printf("%c\n", aux->character);
 }
+//pesquisa um determinado elemento pelo seu caracter
 
 void searchNode(circular_list *head, char character)
 {
@@ -99,7 +101,7 @@ void searchNode(circular_list *head, char character)
             printf("Elemento Inexistente!\n");
     }
 }
-
+//divide a lista circular em duas - uma de vogais e outra de consoantes
 void divideList(circular_list *head)
 {
     circular_list *vowel_list = NULL, *consonant_list = NULL, *aux = head;
@@ -158,7 +160,7 @@ void divideList(circular_list *head)
     printf("Lista de Consoantes: \n");
     printList(consonant_list); //imprime consoantes
 }
-
+//remove todos os elementos da lista circular
 circular_list *removeList(circular_list *head)
 {
     circular_list *aux = head;

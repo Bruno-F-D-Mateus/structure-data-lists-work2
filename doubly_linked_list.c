@@ -212,13 +212,26 @@ void removeStation(int routeCode, routes *headRoute, char *stationName)
     }
 }
 //elimina uma rota e todas suas paragens
-void removeRoute(int routeCode, routes *headRoute){
-
+routes *removeRoute(int routeCode, routes *headRoute){
+    routes *auxRoute = getRouteByCode(routeCode, headRoute);
+    if(!auxRoute) printf("Rota nao Existe\n\n");
+    else{
+        if (!auxRoute->prev) //encontrou no início
+            headRoute = auxRoute->next;
+        else if(!auxRoute->next) //encontrou no fim
+            auxRoute->prev->next = auxRoute->next;
+        else{ //no meio
+            auxRoute->prev->next = auxRoute->next;
+            auxRoute->next->prev = auxRoute->prev;
+        }
+        free(auxRoute);
+    }
+    return headRoute;
 }
 // pesquisa uma determinada rota pelo código
-routes *getRouteByCode(int code, routes *head)
+routes *getRouteByCode(int code, routes *headRoute)
 {
-    routes *aux = head;
+    routes *aux = headRoute;
 
     if (aux == NULL)
         return NULL;
@@ -229,10 +242,10 @@ routes *getRouteByCode(int code, routes *head)
     return getRouteByCode(code, aux->next);
 }
 
-int countRts(routes *rts)
+int countRts(routes *headRoute)
 {
     int cont = 0;
-    routes *aux = rts;
+    routes *aux = headRoute;
 
     return aux == NULL ? 0 : 1 + countRts(aux->next);
 }
