@@ -13,15 +13,17 @@ int main()
   myRoutes = createRouteBegin(myRoutes); //3 - 1ª
 
   printRoutes(myRoutes);
-
   createStationEnd(1, "shibuya", 56, myRoutes);
-  createStationEnd(1, "tokyo", 90, myRoutes);
-  createStationEnd(1, "hong kong", 27, myRoutes);
+  createStationEnd(1, "tokyo", 20, myRoutes);
+/*
+
+*/
 
   printf("==============\n");
 
-  printStation(getRouteByCode(3, myRoutes));
-  //printMaxStation(1,getRouteByCode(1, myRoutes));
+  printStation(getRouteByCode(1, myRoutes));
+
+  printMaxStation(1,myRoutes);
 
   return 0;
 }
